@@ -1,26 +1,58 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <button @click="showMessageBox">MessageBox</button>
+    <button @click="showConfirmMessageBox">ConfirmMessageBox</button>
+    <button @click="showPromptMessageBox">PromptMessageBox</button>
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+import { MessageBox } from "./MyUI";
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+const showMessageBox = () => {
+  MessageBox({
+    confirmBtnText: "确定",
+    title: "MessageBox",
+    content: "This is content",
+  })
+    .then(() => {
+      console.log("MessageBox resolve");
+    })
+    .catch(() => {
+      console.log("MessageBox reject");
+    });
+};
+
+const showConfirmMessageBox = () => {
+  MessageBox.confirm({
+    showCancelBtn: true,
+    cancelBtnText: "取消",
+    title: "MessageBox.confirm",
+    content: "This is content",
+  })
+    .then(() => {
+      console.log("ConfirmMessageBox resolve");
+    })
+    .catch(() => {
+      console.log("ConfirmMessageBox reject");
+    });
+};
+
+const showPromptMessageBox = () => {
+  MessageBox.prompt({
+    confirmBtnText: "确定",
+    showCancelBtn: true,
+    cancelBtnText: "取消",
+    title: "PromptMessageBox.prompt",
+    content: "PromptMessageBox is content",
+  })
+    .then((v) => {
+      console.log("ConfirmMessageBox resolve", v);
+    })
+    .catch(() => {
+      console.log("ConfirmMessageBox reject");
+    });
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
